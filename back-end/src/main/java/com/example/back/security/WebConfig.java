@@ -3,6 +3,7 @@ import com.example.back.dsl.CustomDsl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -21,8 +23,6 @@ public class WebConfig  {
     private final UserDetailsService userDetails;
     private final PasswordEncoder passwordEncoder;
     private final CustomDsl dsl;
-
-
 
     @Autowired
     public WebConfig(UserDetailsService userDetails, PasswordEncoder passwordEncoder, CustomDsl dsl) {
@@ -34,7 +34,18 @@ public class WebConfig  {
 
     @Bean
     public SecurityFilterChain filterChain( HttpSecurity http) throws Exception {
-        http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable);
+        http.cors().disable().csrf().disable()
+                        .authorizeHttpRequests(auth -> auth
+                                .antMatchers("/",
+                                        "/favicon.png",
+                                        "/static/**",
+                                        "/**/*.json",
+                                        "/**/*.html")
+                                .permitAll()
+                                .antMatchers("/register").permitAll()
+                                .anyRequest().authenticated()
+                        )
+                .httpBasic().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()));
         http.addFilterAfter(new TimeFilter(), BasicAuthenticationFilter.class);
         http.apply(dsl);
         return http.build();
@@ -49,10 +60,4 @@ public class WebConfig  {
             throws Exception {
         auth.userDetailsService(userDetails).passwordEncoder(passwordEncoder);
     }
-
-
-
-
-
-
 }

@@ -70,14 +70,6 @@ class ChooseForm extends Component {
     };
     onSubmit = (e) => {
         e.preventDefault();
-        // this.props.sendPoint(
-        //         {
-        //             x: x,
-        //             y: y,
-        //             r: r,
-        //             timeZone: (new Date()).getTimezoneOffset(),
-        //         }
-        //     )
         const { X, Y, R } = this.state;
 
         // Find the selected X value
@@ -91,12 +83,8 @@ class ChooseForm extends Component {
             this.props.sendPoint({
                 x: selectedX,
                 y: Y,
-                r: selectedR,
-                timeZone: (new Date()).getTimezoneOffset(),
+                r: selectedR
             });
-        } else {
-            // Handle cases where X, Y, or R might not be selected
-            console.error('Please select X, Y, and R values.');
         }
     }
     validateField(fieldName, value) {

@@ -9,7 +9,7 @@
         height: 40%;
     }
 
-    table {
+    .table-body {
         text-align: center;
     }
 }
@@ -25,7 +25,7 @@
         height: 40%;
     }
 
-    table {
+    .table-body {
         text-align: center;
     }
 }
@@ -41,7 +41,7 @@
         height: 40%;
     }
 
-    table {
+    .table-body{
         text-align: center;
     }
 }

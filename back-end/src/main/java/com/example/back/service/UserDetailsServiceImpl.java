@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private  UserRepository user;
@@ -21,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Логин не найден");
 
         }
-        return (UserDetails) NewUser.fromEntity(foundUser);
+        return foundUser;
 
     }
 }

@@ -27,8 +27,8 @@ class App extends Component {
 }
 const mapStateToProps = store => {
     return {
-        coordinates: store.coordinates,
-        results: store.results
+        user: store.user,
+        app: store.app
     }
 };
 

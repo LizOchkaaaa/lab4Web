@@ -6,6 +6,7 @@ import com.example.back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +29,15 @@ public class Login {
         ArrayList<String> errors = validateUsername(newUser.getUsername());
         errors.addAll(validatePassword(newUser.getPassword()));
         if (errors.isEmpty()) {
-            userService.create(newUser.getUsername(), resultManager.getHash(newUser.getPassword()));
+            userService.create(newUser.getUsername(), newUser.getPassword());
             return new ResponseEntity<>( HttpStatus.CREATED );
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestHeader("Authorization") String authorization) {
-        resultManager.check(authorization);
+    public ResponseEntity<String> login() {
+  //      resultManager.check(authorization);
         return new ResponseEntity<>("Successful", HttpStatus.OK);
     }
 

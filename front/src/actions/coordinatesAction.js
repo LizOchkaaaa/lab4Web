@@ -46,7 +46,7 @@ export function sendPoint(point) {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
-                  'Authorization': localStorage.getItem("user")
+                  'Authorization': 'Basic ' + localStorage.getItem("user")
             }
         })
             .then(result => {
@@ -89,7 +89,7 @@ export function getPoints() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                  'Authorization': localStorage.getItem("user")
+                  'Authorization': 'Basic ' + localStorage.getItem("user")
             }
         }).then(data => {
             dispatch({

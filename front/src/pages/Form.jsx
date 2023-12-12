@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {login, registration, setAnswer, setLogin, setPassword} from "../actions/userAction";
 import "../screen/form.css"
+import {sendPoint, setR, setX, setY} from "../actions/coordinatesAction";
+import FormErrors from "./FornErrors";
 
 class form extends Component {
     constructor(props) {
@@ -119,6 +121,10 @@ class form extends Component {
                                 disabled={!this.state.formValid}>Войти
                         </button>
                     </div>
+
+                </div>
+                <div className="formErrorsStart">
+                    <FormErrors formErrors={this.state.formErrors} answer={this.props.user.userAnswer}/>
                 </div>
 
             </form>

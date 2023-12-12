@@ -27,16 +27,22 @@ public class ResultManager {
     }
 
     public Result addHit(ResultsDto resultsDto,String username , Timestamp startTime) {
+        CheckArea checkArea = new CheckArea();
         Long start = System.currentTimeMillis();
         Result results = new Result();
-        results.setX(resultsDto.getX());
-        results.setY(resultsDto.getY());
-        results.setR(resultsDto.getR());
-        results.setResultArea(CheckArea.check(results.getX(),results.getY(),results.getR()));
-        results.setUser(userRepository.findByUsername(username));
-        results.setTimeScript(System.currentTimeMillis() - start);
-        results.setTime(startTime);
-        checkAreaRepository.save(results);
+        if(checkArea.validate(resultsDto.getX() , resultsDto.getY() , resultsDto.getR())) {
+            results.setX(resultsDto.getX());
+            results.setY(resultsDto.getY());
+            results.setR(resultsDto.getR());
+            results.setResultArea(CheckArea.check(results.getX(), results.getY(), results.getR()));
+            results.setUser(userRepository.findByUsername(username));
+            results.setTimeScript(System.currentTimeMillis() - start);
+            results.setTime(startTime);
+            checkAreaRepository.save(results);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO validation");
+        }
         return results;
     }
 

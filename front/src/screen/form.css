@@ -35,6 +35,12 @@
         top: 30px;
         left: 20%;
     }
+    .formErrorsStart{
+        position: absolute;
+        top: 50%;
+        left: 45%;
+        color: red;
+    }
 }
 @media (min-width: 772px)  {
     .form {

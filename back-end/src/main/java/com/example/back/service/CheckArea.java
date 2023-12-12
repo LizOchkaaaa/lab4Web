@@ -1,6 +1,9 @@
 package com.example.back.service;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CheckArea {
     public static boolean check(double x, double y, double r) {
@@ -29,5 +32,16 @@ public class CheckArea {
 
     private static boolean inCircle(double x, double y, double r) {
         return x <= 0 && y <= 0 && (Math.pow(x,2) + Math.pow(y,2)) <= Math.pow(r/2,2);
+    }
+
+    public boolean validate(double x , double y , double r){
+            List<Double> arrayR = new ArrayList<>();
+            for (double i = 1; i <= 3; i += 1) {
+                arrayR.add(i);
+            }
+            if (arrayR.contains(r) && (x > -5) && (x < 3) && (y > -3) && (y < 3)) {
+                return true;
+            }
+        return false;
     }
 }

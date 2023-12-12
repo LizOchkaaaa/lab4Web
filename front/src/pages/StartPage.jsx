@@ -3,7 +3,10 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import "../screen/index.css";
 import img from "../img/itmo.png"
+import FormErrors from "./FornErrors.jsx";
+import {login, registration, setAnswer, setLogin, setPassword} from "../actions/userAction";
 class StartPage extends Component{
+
     render() {
         return (
             <div >
@@ -13,6 +16,7 @@ class StartPage extends Component{
                     <div className="left-right-line-short-header1">P3223</div>
                     <div className="left-right-line-short-header2">Вариант 861518</div>
                 </div>
+
                 <Form/>
             </div>
         );
@@ -21,8 +25,9 @@ class StartPage extends Component{
 
 const stateToProps = store => {
     return {
-
-        user: store.user
+        user: store.user,
+        app: store.app
     }
 };
+
 export default (connect(stateToProps)(StartPage));

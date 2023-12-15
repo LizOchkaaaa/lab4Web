@@ -133,8 +133,18 @@ export function authorization() {
             .then(result => {
 
                 if (result.data) {
-                    if (window.location.href !== 'http://localhost:3000/main')
-                    window.location = '/main'
+                    if (result.data === "Successful")
+                        dispatch({
+                            type: SET_SIGN_IN,
+                            payload: true,
+                        })
+                }
+                else {
+                    dispatch({
+                        type: SET_SIGN_IN,
+                        payload: false,
+
+                    })
                 }
             })
             .catch(error => {
@@ -150,8 +160,10 @@ export function authorization() {
                     type: SET_ANSWER,
                     payload: answer,
                 });
-                if (window.location.href !== 'http://localhost:3000/')
-                    window.location = "/"
+                dispatch({
+                    type: SET_SIGN_IN,
+                    payload: false,
+                })
             });
     };
 }
